@@ -11,10 +11,13 @@
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.0",
     "@mui/styled-engine-sc": "^5.8.0",
+    "@mui/x-data-grid": "^5.13.1",
     "mongodb": "^4.8.0",
     "next": "12.2.2",
+    "rc-table": "^7.25.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "^5.3.5"
