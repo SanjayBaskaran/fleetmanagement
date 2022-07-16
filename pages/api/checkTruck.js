@@ -31,6 +31,8 @@ export default async function handler(req, res) {
         },
       ]);
       const lastData = await lastLog.toArray();
+      const filteredData = lastData.filter(item => {return item._id == truck_info.truck_id});
+      console.log("Filtered Data",filteredData)
       console.log(lastData);
       query = { entryId: lastData[0].entryId, truckId: truck_info.truck_id };
       update = {
@@ -98,9 +100,20 @@ export default async function handler(req, res) {
     console.log(truck_info.truck_id);
     if (truck_info.truck_id != "" && truck_info.truck_id != undefined) {
       console.log("data not found");
-      const data = { truckId: truck_info.truck_id, status: "in" };
+      let data = { truckId: truck_info.truck_id, status: "in" };
       const result = await truckCollection.insertOne(data);
-
+      data = {
+        entryId: 1,
+        truckId: truck_info.truck_id,
+        inTime: new Date().getHours() + ":" + new Date().getMinutes(),
+        inDate:
+          new Date().getDate() +
+          "/" +
+          new Date().getMonth() +
+          "/" +
+          new Date().getFullYear(),
+      };
+      const insertInlog = await logCollection.insertOne(data);
       client.close();
     }
     res.status(401).json({ message: "Invalid TRUCK id" });
