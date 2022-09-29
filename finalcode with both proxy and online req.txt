@@ -10,7 +10,7 @@
 
 
 #define ServoPort D1
-
+#define led D2
 #define SOUND_VELOCITY 0.034
 #define CM_TO_INCH 0.393701
 
@@ -64,6 +64,7 @@ void setup() {
   Serial.begin(115200);
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+  pinMode(led, OUTPUT);
 
   myservo.attach(ServoPort);
 
@@ -91,7 +92,7 @@ void setup() {
 
   Serial.println("HTTP server started");
   
-
+  digitalWrite(led,HIGH);
 }
 
 
