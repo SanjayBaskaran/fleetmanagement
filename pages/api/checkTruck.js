@@ -34,7 +34,8 @@ export default async function handler(req, res) {
       const filteredData = lastData.filter(item => {return item._id == truck_info.truck_id});
       console.log("Filtered Data",filteredData)
       console.log(lastData);
-      query = { entryId: lastData[0].entryId, truckId: truck_info.truck_id };
+      let id= filteredData[0].entryId == undefined ? 1:filteredData[0].entryId;
+      query = { entryId: filteredData[0].entryId, truckId: truck_info.truck_id };
       update = {
         $set: {
           outTime: new Date().getHours() + ":" + new Date().getMinutes(),
@@ -65,10 +66,10 @@ export default async function handler(req, res) {
         },
       ]);
       const lastData = await lastLog.toArray();
-      console.log(lastData);
-      if (lastData.length > 0) {
+      const filteredData = lastData.filter(item => {return item._id == truck_info.truck_id});
+      if (filteredData.length > 0) {
         let data = {
-          entryId: lastData[0].entryId + 1,
+          entryId: filteredData[0].entryId + 1,
           truckId: truck_info.truck_id,
           inTime: new Date().getHours() + ":" + new Date().getMinutes(),
           inDate:

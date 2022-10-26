@@ -18,7 +18,7 @@ export default function TruckDetails() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [truckDetails]);
   return (
     <table>
       <thead>
