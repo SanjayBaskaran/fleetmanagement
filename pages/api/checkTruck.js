@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   console.log(req.body);
   const truck_info = req.body;
   const client = await MongoClient.connect(
-    "mongodb://localhost:27017/fleet_management"
+    "mongodb+srv://Sanjay:Sanjay@cluster0.hzjuu.mongodb.net/?retryWrites=true&w=majority"
   );
   const db = await client.db();
   const truckCollection = await db.collection("truck");
