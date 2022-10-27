@@ -28,6 +28,7 @@ export default function TruckDetails() {
           <th>In Date</th>
           <th>Out Date</th>
           <th>Out Time</th>
+          <th>Price</th>
         </tr>
       </thead>
       <tbody>
@@ -40,6 +41,7 @@ export default function TruckDetails() {
                 <td>{log?.inDate}</td>
                 <td>{log?.outDate}</td>
                 <td>{log?.outTime}</td>
+                <td>{log?.price == undefined ? "":"Rs."+log?.price}</td>
               </tr>
             );
           })}

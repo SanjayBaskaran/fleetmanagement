@@ -14,6 +14,7 @@ export default async function handler(req, res) {
   const result = await truckCollection.findOne({
     truckId: truck_info.truck_id,
   });
+  console.log("result",result);
   if (result) {
     if (result.status == "in") {
       //truck status already in so the truck is leaving right now
@@ -37,7 +38,28 @@ export default async function handler(req, res) {
       console.log("Filtered Data",filteredData)
       console.log(lastData);
       let id= filteredData[0].entryId == undefined ? 1:filteredData[0].entryId;
-      query = { entryId: filteredData[0].entryId, truckId: truck_info.truck_id };
+      console.log("id",id);
+
+      let price = 0;
+      query = { entryId: id, truckId: truck_info.truck_id };
+      const lastRecord = await logCollection.findOne(query);
+      
+      var startTime=lastRecord.inTime;
+
+      var endTime= new Date().getHours() + ":" + new Date().getMinutes();
+      var dateExit = new Date().getDate() +
+      "/" +
+      new Date().getMonth() +
+      "/" +
+      new Date().getFullYear();
+      let hours  = eval(startTime.split(":")[0]+"-"+endTime.split(":")[0]);
+
+      console.log("last Record ",hours,startTime.split(":")[0]+"-"+endTime.split(":")[0]);
+      if(lastRecord.inDate == dateExit){
+        price = ((hours==0)?1:hours)*50;
+      }else{
+        price = eval(lastRecord.inDate.split("/")[0] - dateExit.split("/")[0]) *200
+      }
       update = {
         $set: {
           outTime: new Date().getHours() + ":" + new Date().getMinutes(),
@@ -47,6 +69,7 @@ export default async function handler(req, res) {
             new Date().getMonth() +
             "/" +
             new Date().getFullYear(),
+          price : price
         },
       };
       const insertInlog = await logCollection.updateOne(query, update);
